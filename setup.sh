@@ -86,11 +86,12 @@ else
     echo "Installing No-IP DUC..."
     wget -q https://www.noip.com/client/linux/noip-duc-linux.tar.gz
     tar xzf noip-duc-linux.tar.gz
-    cd noip-*
+    NOIP_DIR=$(ls -d noip-*/ | head -1)
+    cd "$NOIP_DIR"
     sudo make
     sudo make install
     cd ..
-    rm -rf noip-*
+    rm -rf noip-* noip-duc-linux.tar.gz
 fi
 
 echo "No-IP installed. Run 'sudo noip2 -C' to configure with your No-IP account."
