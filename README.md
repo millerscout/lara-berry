@@ -88,13 +88,16 @@ Since your home IP may change, use a DDNS service:
 - This gives you a domain like `yourname.ddns.net` pointing to your current IP.
 
 ### 2. Port Forwarding
-In your router settings, forward the necessary ports to your Pi's local IP (e.g., 192.168.1.100):
+In your router settings, forward the necessary ports to your Pi's local IP (e.g., 192.168.88.165):
+
 - Webmin: 10000
 - Nginx Proxy Manager: 80, 81, 443
-- Technitium DNS: 5380 (and 5353 if exposing DNS externally, not recommended for security)
+- Technitium DNS: 5380
 - WireGuard: 51820/UDP
 - Uptime Kuma: 3001
 - Vaultwarden: 8080
+
+**For MikroTik Router**: See `MIKROTIK-RB760iGS-SETUP.md` for detailed instructions specific to the RB760iGS model.
 
 **Security Warning**: Only forward ports you need, and use HTTPS where possible. Consider a VPN (WireGuard) for secure access.
 
