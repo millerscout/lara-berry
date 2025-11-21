@@ -99,4 +99,6 @@ echo "No-IP installed. Run 'sudo noip2 -C' to configure with your No-IP account.
 echo "Setup complete!"
 echo "Podman installed and configured for rootless use."
 echo "Webmin installed and running on https://your-pi-ip:10000"
+echo "To start the containers now: cd /path/to/lara-berry && podman-compose up -d"
+echo "Containers will start automatically on boot via systemd."
 echo "Reboot recommended: sudo reboot"
