@@ -48,7 +48,7 @@ After setup, you can run the included services (Technitium DNS, Nginx Proxy Mana
 1. Ensure you're in the repository directory.
 2. Run: `podman-compose up -d`
 
-This will start all services in the background. Access them via:
+After setup, the services will start automatically on boot. You can also manually start/stop them with `podman-compose up -d` or `podman-compose down`.
 - **Technitium DNS**: http://your-pi-ip:5380 (DNS server on port 53)
 - **Nginx Proxy Manager**: http://your-pi-ip:81 (admin on port 81, proxy on 80/443)
 - **WireGuard**: Config files in `./data/wireguard`, connect using the generated peer configs

@@ -55,6 +55,25 @@ sudo apt install -y python3 python3-pip
 echo "Installing podman-compose..."
 sudo pip3 install podman-compose
 
+# Create systemd service to start podman-compose on boot
+echo "Creating systemd service for automatic startup..."
+sudo tee /etc/systemd/system/lara-berry.service > /dev/null <<EOF
+[Unit]
+Description=Lara-Berry Podman Compose
+After=network.target
+
+[Service]
+Type=oneshot
+User=$USER
+WorkingDirectory=/home/$USER/lara-berry
+ExecStart=/usr/local/bin/podman-compose up -d
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable lara-berry
+
 # Enable and start Webmin service
 sudo systemctl enable webmin
 sudo systemctl start webmin
