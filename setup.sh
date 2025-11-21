@@ -29,6 +29,10 @@ sudo tee /etc/containers/registries.conf > /dev/null <<EOF
 registries = ['docker.io', 'registry.fedoraproject.org', 'quay.io']
 EOF
 
+# Allow rootless Podman to bind to privileged ports
+echo "Allowing rootless Podman to bind to privileged ports..."
+sudo sysctl -w net.ipv4.ip_unprivileged_port_start=1
+
 # Install Webmin
 if dpkg -l webmin 2>/dev/null | grep -q ^ii; then
     echo "Webmin is already installed."
