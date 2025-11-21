@@ -27,7 +27,13 @@ This repository provides scripts and instructions to set up a Podman-based conta
    - Configure rootless Podman for your user.
    - Install and configure Webmin.
 
-3. Reboot your Pi (recommended after setup):
+3. Copy and configure environment variables:
+   ```
+   cp .env.example .env
+   # Edit .env with your domain and other settings
+   ```
+
+4. Reboot your Pi (recommended after setup):
    ```
    sudo reboot
    ```

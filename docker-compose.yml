@@ -34,7 +34,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/Sao_Paulo
+      - TZ
       - SERVERPORT=51820
       - PEERS=1  # Number of peers
       - PEERDNS=auto
@@ -58,6 +58,8 @@ services:
     container_name: vaultwarden
     ports:
       - "8080:80"
+    environment:
+      - DOMAIN
     volumes:
       - ./data/vaultwarden:/data
     restart: unless-stopped
