@@ -21,6 +21,7 @@ fi
 
 # Configure rootless Podman for the current user
 echo "Configuring rootless Podman..."
+sudo groupadd -f podman
 sudo usermod -aG podman $USER
 sudo mkdir -p /etc/containers
 sudo tee /etc/containers/registries.conf > /dev/null <<EOF
@@ -79,14 +80,18 @@ sudo systemctl enable webmin
 sudo systemctl start webmin
 
 # Install No-IP Dynamic Update Client
-echo "Installing No-IP DUC..."
-wget -q https://www.noip.com/client/linux/noip-duc-linux.tar.gz
-tar xzf noip-duc-linux.tar.gz
-cd noip-*
-sudo make
-sudo make install
-cd ..
-rm -rf noip-*
+if command -v noip2 >/dev/null 2>&1; then
+    echo "No-IP DUC is already installed."
+else
+    echo "Installing No-IP DUC..."
+    wget -q https://www.noip.com/client/linux/noip-duc-linux.tar.gz
+    tar xzf noip-duc-linux.tar.gz
+    cd noip-*
+    sudo make
+    sudo make install
+    cd ..
+    rm -rf noip-*
+fi
 
 echo "No-IP installed. Run 'sudo noip2 -C' to configure with your No-IP account."
 
