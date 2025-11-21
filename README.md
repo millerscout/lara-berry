@@ -118,7 +118,7 @@ This setup allows secure remote access via domain names with HTTPS.
 
 ## Setting up Self-Signed SSL for Vaultwarden
 
-1. **Configure DNS**: After Technitium is running, run `./setup-dns.sh` to automatically create the zone and records for `lara-berry`. Alternatively, access http://your-pi-ip:5380 and manually create a primary zone for `lara-berry` with an A record pointing to your Pi's IP.
+1. **Configure DNS**: After Technitium is running, try `./setup-dns.sh` for automated setup. If it fails (API may require authentication), access http://127.0.0.1:5380 and manually create a primary zone for `lara-berry` with an A record for `@` pointing to your Pi's IP (run `hostname -I` to get it).
 
 2. **Set up environment**:
    ```
