@@ -116,6 +116,23 @@ For each service:
 
 This setup allows secure remote access via domain names with HTTPS.
 
-## Contributing
+## Setting up Self-Signed SSL for Vaultwarden
 
-Feel free to submit issues or pull requests for improvements.
+1. **Configure DNS**: In Technitium DNS (http://your-pi-ip:5380), create a primary zone for `lara-berry`, add an A record pointing to your Pi's IP.
+
+2. **Set up environment**:
+   ```
+   cp .env.example .env
+   # Edit .env: DOMAIN=https://lara-berry
+   podman-compose down && podman-compose up -d
+   ```
+
+3. **Configure Nginx Proxy Manager**:
+   - Access at `http://your-pi-ip:81`
+   - **SSL Certificates** > **Add SSL Certificate** > **Self-signed** for domain `lara-berry`
+   - **Proxy Hosts** > **Add Proxy Host**:
+     - Domain: `lara-berry`
+     - Forward to: `http://your-pi-ip:8080`
+     - Enable SSL, select the self-signed certificate
+
+4. **Access Vaultwarden**: Go to `https://lara-berry`, accept the certificate warning. The Web Crypto API should now work over HTTPS.
