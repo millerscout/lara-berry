@@ -1,0 +1,108 @@
+# Lara-Berry: Podman Environment Setup for Raspberry Pi 4
+
+This repository provides scripts and instructions to set up a Podman-based container environment on a Raspberry Pi 4 running Raspberry Pi OS (64-bit). It also includes Webmin for web-based system administration.
+
+## Prerequisites
+
+- Raspberry Pi 4 with Raspberry Pi OS (64-bit) installed.
+- Internet connection for downloading packages.
+- Basic familiarity with terminal commands.
+
+## Quick Setup
+
+1. Clone this repository to your Raspberry Pi:
+   ```
+   git clone https://github.com/millerscout/lara-berry.git
+   cd lara-berry
+   ```
+
+2. Run the automated setup script (requires sudo):
+   ```
+   sudo bash setup.sh
+   ```
+
+   This script will:
+   - Update your system.
+   - Install Podman.
+   - Configure rootless Podman for your user.
+   - Install and configure Webmin.
+
+3. Reboot your Pi (recommended after setup):
+   ```
+   sudo reboot
+   ```
+
+## Post-Setup Configuration
+
+- **Webmin Access**: Open a web browser and go to `https://your-pi-ip:10000`. Log in with your system root credentials (default: root / your root password). Change the password immediately for security.
+- **Podman**: You can now run containers as your user (rootless). For example:
+  ```
+  podman run -d --name hello-world hello-world
+  ```
+- **Firewall**: Ensure ports 10000 (Webmin) and any container ports are open if needed.
+
+## Running Additional Services
+
+After setup, you can run the included services (Technitium DNS, Nginx Proxy Manager, WireGuard VPN, and Uptime Kuma) using Podman Compose:
+
+1. Ensure you're in the repository directory.
+2. Run: `podman-compose up -d`
+
+This will start all services in the background. Access them via:
+- **Technitium DNS**: http://your-pi-ip:5380 (DNS server on port 53)
+- **Nginx Proxy Manager**: http://your-pi-ip:81 (admin on port 81, proxy on 80/443)
+- **WireGuard**: Config files in `./data/wireguard`, connect using the generated peer configs
+- **Uptime Kuma**: http://your-pi-ip:3001
+- **Vaultwarden**: http://your-pi-ip:8080
+
+To stop: `podman-compose down`
+
+Note: Adjust ports or configs in `docker-compose.yml` as needed. Ensure no port conflicts.
+
+## Troubleshooting
+
+- **Podman Issues**:
+  - If containers fail to start, load required kernel modules: `sudo modprobe overlay && sudo modprobe br_netfilter`
+  - For rootless mode, log out and back in after setup.
+- **Webmin Issues**:
+  - If Webmin doesn't start, check `/var/webmin/miniserv.error` for logs.
+  - Ensure port 10000 is not blocked by your firewall.
+- **General**:
+  - Run `sudo apt update` if package installation fails.
+  - Check system logs with `journalctl -u webmin` or `journalctl -u podman`.
+
+## Remote Access Setup
+
+To access your Raspberry Pi and services from outside your local network, you'll need DNS resolution and port forwarding. Here's a basic guide:
+
+### 1. Dynamic DNS (DDNS)
+Since your home IP may change, use a DDNS service:
+- Sign up for a free service like No-IP, DuckDNS, or Dynu.
+- The setup script installs the No-IP Dynamic Update Client (DUC). After setup, run `sudo noip2 -C` and follow the prompts to configure with your No-IP account.
+- This gives you a domain like `yourname.ddns.net` pointing to your current IP.
+
+### 2. Port Forwarding
+In your router settings, forward the necessary ports to your Pi's local IP (e.g., 192.168.1.100):
+- Webmin: 10000
+- Nginx Proxy Manager: 80, 81, 443
+- Technitium DNS: 5380 (and 53 if exposing DNS externally, not recommended for security)
+- WireGuard: 51820/UDP
+- Uptime Kuma: 3001
+- Vaultwarden: 8080
+
+**Security Warning**: Only forward ports you need, and use HTTPS where possible. Consider a VPN (WireGuard) for secure access.
+
+### 3. DNS Configuration
+- For local DNS: Set your router or devices to use the Pi's IP as primary DNS. Then configure Technitium DNS (via http://your-pi-ip:5380) to add local zones/records (e.g., pi.local -> your Pi IP).
+- For external DNS: If you own a domain, delegate it to Technitium (advanced). Otherwise, use your DDNS domain and configure NPM to proxy subdomains (e.g., webmin.yourname.ddns.net -> Pi:10000).
+
+### 4. Using Nginx Proxy Manager
+NPM can handle SSL certificates and proxy requests. Access it at http://your-pi-ip:81, add your DDNS domain, and create proxies for each service.
+
+Example: Proxy `webmin.yourdomain.com` to `http://pi-ip:10000`.
+
+This setup allows secure remote access via domain names.
+
+## Contributing
+
+Feel free to submit issues or pull requests for improvements.
