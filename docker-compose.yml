@@ -6,8 +6,6 @@ services:
     container_name: technitium-dns
     ports:
       - "5380:5380/tcp"
-      - "5353:53/udp"
-      - "5353:53/tcp"
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
