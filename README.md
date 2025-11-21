@@ -49,11 +49,11 @@ After setup, you can run the included services (Technitium DNS, Nginx Proxy Mana
 2. Run: `podman-compose up -d`
 
 After setup, the services will start automatically on boot. You can also manually start/stop them with `podman-compose up -d` or `podman-compose down`.
-- **Technitium DNS**: http://your-pi-ip:5380 (DNS server on port 5353)
-- **Nginx Proxy Manager**: http://your-pi-ip:81 (admin on port 81, proxy on 80/443)
+- **Technitium DNS**: http://localhost:5380 (DNS server on port 5353)
+- **Nginx Proxy Manager**: http://localhost:81 (admin on port 81, proxy on 80/443)
 - **WireGuard**: Config files in `./data/wireguard`, connect using the generated peer configs
-- **Uptime Kuma**: http://your-pi-ip:3001
-- **Vaultwarden**: http://your-pi-ip:8080
+- **Uptime Kuma**: http://localhost:3001
+- **Vaultwarden**: http://your-pi-ip:8080 (or http://lara-berry:8080 if DNS is set up)
 
 To stop: `podman-compose down`
 
@@ -99,9 +99,16 @@ In your router settings, forward the necessary ports to your Pi's local IP (e.g.
 ### 4. Using Nginx Proxy Manager
 NPM can handle SSL certificates and proxy requests. Access it at http://your-pi-ip:81, add your DDNS domain, and create proxies for each service.
 
-Example: Proxy `webmin.yourdomain.com` to `http://pi-ip:10000`.
+Example: Proxy `webmin.yourdomain.com` to `http://pi-ip:10000`. Enable SSL with Let's Encrypt for automatic certificates.
 
-This setup allows secure remote access via domain names.
+For each service:
+- **Webmin**: Proxy to `http://pi-ip:10000`
+- **Technitium DNS**: Proxy to `http://localhost:5380`
+- **Uptime Kuma**: Proxy to `http://localhost:3001`
+- **Vaultwarden**: Proxy to `http://localhost:8000`
+- **WireGuard**: Not typically proxied; access configs directly.
+
+This setup allows secure remote access via domain names with HTTPS.
 
 ## Contributing
 

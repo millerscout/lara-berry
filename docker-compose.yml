@@ -4,10 +4,10 @@ services:
   technitium-dns:
     image: technitium/dns-server:latest
     container_name: technitium-dns
-    network_mode: host
-    environment:
-      - DNS_PORT=5353
-      - WEB_PORT=5380
+    ports:
+      - "127.0.0.1:5380:5380/tcp"
+      - "127.0.0.1:5353:53/udp"
+      - "127.0.0.1:5353:53/tcp"
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
@@ -15,7 +15,10 @@ services:
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy-manager
-    network_mode: host
+    ports:
+      - "127.0.0.1:81:81"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./data/npm/data:/data
       - ./data/npm/letsencrypt:/etc/letsencrypt
@@ -44,9 +47,8 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
-    network_mode: host
-    environment:
-      - PORT=3001
+    ports:
+      - "127.0.0.1:3001:3001"
     volumes:
       - ./data/uptime-kuma:/app/data
     restart: unless-stopped
@@ -54,9 +56,8 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    network_mode: host
-    environment:
-      - ROCKET_PORT=8080
+    ports:
+      - "8080:80"
     volumes:
       - ./data/vaultwarden:/data
     restart: unless-stopped
