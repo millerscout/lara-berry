@@ -4,7 +4,7 @@
 # Run after Technitium is accessible
 
 PI_IP=$(hostname -I | awk '{print $1}')
-TECHNIUM_URL="http://127.0.0.1:5381"
+TECHNIUM_URL="http://127.0.0.1:5380"
 
 echo "Setting up DNS zone for lara-berry with IP: $PI_IP"
 
