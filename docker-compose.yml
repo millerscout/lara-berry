@@ -15,10 +15,7 @@ services:
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy-manager
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
+    network_mode: host
     volumes:
       - ./data/npm/data:/data
       - ./data/npm/letsencrypt:/etc/letsencrypt
@@ -27,13 +24,14 @@ services:
   wireguard:
     image: linuxserver/wireguard:latest
     container_name: wireguard
+    network_mode: host
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/London  # Change to your timezone
+      - TZ=America/Sao_Paulo
       - SERVERPORT=51820
       - PEERS=1  # Number of peers
       - PEERDNS=auto
@@ -41,8 +39,6 @@ services:
     volumes:
       - ./data/wireguard:/config
       - /lib/modules:/lib/modules
-    ports:
-      - "51820:51820/udp"
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
@@ -50,8 +46,9 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:latest
     container_name: uptime-kuma
-    ports:
-      - "3001:3001"
+    network_mode: host
+    environment:
+      - PORT=3001
     volumes:
       - ./data/uptime-kuma:/app/data
     restart: unless-stopped
@@ -59,8 +56,9 @@ services:
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: vaultwarden
-    ports:
-      - "8080:80"
+    network_mode: host
+    environment:
+      - ROCKET_PORT=8080
     volumes:
       - ./data/vaultwarden:/data
     restart: unless-stopped

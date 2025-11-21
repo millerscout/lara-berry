@@ -95,6 +95,7 @@ else
 fi
 
 echo "No-IP installed. Run 'sudo noip2 -C' to configure with your No-IP account."
+echo "After configuration, No-IP will start automatically on boot."
 
 echo "Setup complete!"
 echo "Podman installed and configured for rootless use."
