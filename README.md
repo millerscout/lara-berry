@@ -55,7 +55,7 @@ After setup, you can run the included services (Technitium DNS, Nginx Proxy Mana
 2. Run: `podman-compose up -d`
 
 After setup, the services will start automatically on boot. You can also manually start/stop them with `podman-compose up -d` or `podman-compose down`.
-- **Technitium DNS**: http://localhost:5380 (DNS server on port 5353)
+- **Technitium DNS**: http://localhost:5381 (DNS server on port 5353)
 - **Nginx Proxy Manager**: http://localhost:81 (admin on port 81, proxy on 80/443)
 - **WireGuard**: Config files in `./data/wireguard`, connect using the generated peer configs
 - **Uptime Kuma**: http://localhost:3001
@@ -91,7 +91,7 @@ Since your home IP may change, use a DDNS service:
 In your router settings, forward the necessary ports to your Pi's local IP (e.g., 192.168.1.100):
 - Webmin: 10000
 - Nginx Proxy Manager: 80, 81, 443
-- Technitium DNS: 5380 (and 5353 if exposing DNS externally, not recommended for security)
+- Technitium DNS: 5381 (and 5353 if exposing DNS externally, not recommended for security)
 - WireGuard: 51820/UDP
 - Uptime Kuma: 3001
 - Vaultwarden: 8080
@@ -118,7 +118,7 @@ This setup allows secure remote access via domain names with HTTPS.
 
 ## Setting up Self-Signed SSL for Vaultwarden
 
-1. **Configure DNS**: In Technitium DNS (http://your-pi-ip:5380), create a primary zone for `lara-berry`, add an A record pointing to your Pi's IP.
+1. **Configure DNS**: In Technitium DNS (http://your-pi-ip:5381), create a primary zone for `lara-berry`, add an A record pointing to your Pi's IP.
 
 2. **Set up environment**:
    ```

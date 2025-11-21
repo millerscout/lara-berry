@@ -7,7 +7,7 @@ services:
     network_mode: host
     environment:
       - DNS_PORT=5353
-      - WEB_PORT=5380
+      - WEB_PORT=5381
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
