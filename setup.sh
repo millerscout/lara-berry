@@ -54,7 +54,7 @@ sudo apt install -y python3 python3-pip
 
 # Install podman-compose
 echo "Installing podman-compose..."
-sudo pip3 install podman-compose
+sudo pip3 install --break-system-packages podman-compose
 
 # Create systemd service to start podman-compose on boot
 echo "Creating systemd service for automatic startup..."
