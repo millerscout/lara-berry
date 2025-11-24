@@ -4,19 +4,16 @@ services:
   technitium-dns:
     image: technitium/dns-server:latest
     container_name: technitium-dns
-    hostname: technitium-dns
+    hostname: localhost
     ports:
       - "5380:5380/tcp"
       - "53:53/udp"
       - "53:53/tcp"
     environment:
-      - DNS_SERVER_DOMAIN=technitium-dns
-      - DNS_SERVER_WEB_SERVICE_LOCAL_ADDRESSES=172.17.0.1,127.0.0.1
+      - DNS_SERVER_DOMAIN=localhost
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
-    sysctls:
-      - net.ipv4.ip_local_port_range=1024 65535
 
   nginx-proxy-manager:
     image: jc21/nginx-proxy-manager:latest
