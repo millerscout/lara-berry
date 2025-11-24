@@ -10,7 +10,7 @@ services:
       - "5380:5380"
     environment:
       - DNS_PORT=5353
-      - DNS_SERVER_DOMAIN=localhost
+      - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-localhost}
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
