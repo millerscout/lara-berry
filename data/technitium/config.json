@@ -1,7 +1,5 @@
 {
-  "WebService": {
-    "Enabled": true,
-    "HttpPort": 5380,
-    "ListenAddress": "0.0.0.0"
-  }
+  "WebServiceEnabled": true,
+  "WebServiceHttpPort": 5380,
+  "WebServiceListenAddress": "0.0.0.0"
 }
