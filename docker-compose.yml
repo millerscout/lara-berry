@@ -6,12 +6,11 @@ services:
     container_name: technitium-dns
     hostname: localhost
     ports:
-      - "5380:5380/tcp"
+      - "5381:5380/tcp"
       - "53:53/udp"
       - "53:53/tcp"
-    environment:
-      - DNS_SERVER_DOMAIN=localhost
-      - DNS_SERVER_WEB_SERVICE_LOCAL_ADDRESSES=0.0.0.0
+    env_file:
+      - .env
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
