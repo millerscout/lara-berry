@@ -11,6 +11,7 @@ services:
       - "53:53/tcp"
     environment:
       - DNS_SERVER_DOMAIN=localhost
+      - DNS_SERVER_WEB_SERVICE_LOCAL_ADDRESSES=0.0.0.0
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
