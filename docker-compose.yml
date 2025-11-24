@@ -4,11 +4,13 @@ services:
   technitium-dns:
     image: technitium/dns-server:latest
     container_name: technitium-dns
-    network_mode: host
+    ports:
+      - "5353:53/udp"
+      - "5353:53/tcp"
+      - "5380:5380"
     environment:
       - DNS_PORT=5353
       - DNS_SERVER_DOMAIN=localhost
-      - DNS_SERVER_WEB_SERVICE_LOCAL_ADDRESSES=127.0.0.1
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
