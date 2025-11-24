@@ -1,9 +1,20 @@
 {
-  "WebServiceEnabled": true,
-  "WebServiceHttpPort": 5380,
-  "WebServiceListenAddress": "0.0.0.0",
+  "WebService": {
+    "Enabled": true,
+    "HttpPort": 5380,
+    "ListenAddress": "0.0.0.0"
+  },
   "Zones": {
     "lara-berry": {
+      "Type": "Primary",
+      "Records": {
+        "@": {
+          "Type": "A",
+          "Value": "192.168.88.165"
+        }
+      }
+    },
+    "vaultwarden.lara-berry": {
       "Type": "Primary",
       "Records": {
         "@": {
