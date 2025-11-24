@@ -11,6 +11,7 @@ services:
     environment:
       - DNS_PORT=53
       - DNS_SERVER_DOMAIN=${DNS_SERVER_DOMAIN:-localhost}
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=5380
     volumes:
       - ./data/technitium:/etc/dns
     restart: unless-stopped
