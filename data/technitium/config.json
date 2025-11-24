@@ -3,5 +3,16 @@
     "enabled": true,
     "httpPort": 5380,
     "listenAddress": "0.0.0.0"
+  },
+  "Zones": {
+    "lara-berry": {
+      "Type": "Primary",
+      "Records": {
+        "@": {
+          "Type": "A",
+          "Value": "192.168.88.165"
+        }
+      }
+    }
   }
 }
