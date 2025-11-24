@@ -7,21 +7,23 @@
   "Zones": {
     "lara-berry": {
       "Type": "Primary",
-      "Records": {
-        "@": {
-          "Type": "A",
-          "Value": "192.168.88.165"
+      "Records": [
+        {
+          "name": "@",
+          "type": "A",
+          "value": "192.168.88.165"
         }
-      }
+      ]
     },
     "vaultwarden.lara-berry": {
       "Type": "Primary",
-      "Records": {
-        "@": {
-          "Type": "A",
-          "Value": "192.168.88.165"
+      "Records": [
+        {
+          "name": "@",
+          "type": "A",
+          "value": "192.168.88.165"
         }
-      }
+      ]
     }
   }
 }
