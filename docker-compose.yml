@@ -7,8 +7,8 @@ services:
     hostname: localhost
     ports:
       - "5381:5380/tcp"
-      - "53:53/udp"
-      - "53:53/tcp"
+      - "5354:53/udp"
+      - "5354:53/tcp"
     env_file:
       - .env
     volumes:
@@ -19,9 +19,12 @@ services:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy-manager
     ports:
-      - "81:81"
-      - "80:80"
-      - "443:443"
+      - "8081:81"
+      - "8080:80"
+      - "8443:443"
+    environment:
+      - INITIAL_ADMIN_EMAIL=admin@example.com
+      - INITIAL_ADMIN_PASSWORD=changeme
     volumes:
       - ./data/npm/data:/data
       - ./data/npm/letsencrypt:/etc/letsencrypt
@@ -60,9 +63,31 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     ports:
-      - "8080:80"
+      - "8082:80"
+    env_file:
+      - .env
     environment:
       - DOMAIN
     volumes:
       - ./data/vaultwarden:/data
     restart: unless-stopped
+
+  setup:
+    build:
+      context: .
+      dockerfile: Dockerfile.setup
+    container_name: lara-berry-setup
+    env_file:
+      - .env
+    environment:
+      - NPM_HOST=nginx-proxy-manager
+      - NPM_PORT=81
+      - SETUP_DOMAIN=lara-berry
+      - DNS_HOST=technitium-dns
+      - DNS_PORT=5380
+    depends_on:
+      - nginx-proxy-manager
+      - technitium-dns
+      - vaultwarden
+      - uptime-kuma
+    restart: "no"

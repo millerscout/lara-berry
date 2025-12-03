@@ -1,0 +1,1 @@
+{"domain_names":["persephone"],"forward_host":"192.168.88.165","forward_port":5381,"certificate_id":0,"ssl_forced":0,"enabled":1,"meta":{"letsencrypt_agree":false,"dns_challenge":false},"advanced_config":"","locations":[],"block_exploits":false,"caching_enabled":false,"allow_websocket_upgrade":false,"http2_support":false,"forward_scheme":"http"}

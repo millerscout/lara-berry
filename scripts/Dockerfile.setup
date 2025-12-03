@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+# Install curl and bash for API calls
+RUN apk add --no-cache curl bash grep
+
+# Copy the setup script
+COPY post-startup-setup.sh /setup.sh
+RUN chmod +x /setup.sh
+
+# Run the setup script
+CMD ["/setup.sh"]
