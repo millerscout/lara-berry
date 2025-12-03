@@ -309,23 +309,23 @@ echo -e "${BLUE}Step 4: Setting up DNS zones...${NC}"
 echo ""
 
 if curl -s -f "http://$DNS_HOST:$DNS_PORT" > /dev/null 2>&1; then
-    echo "  Creating DNS zone: $DOMAIN"
+    echo "  Creating DNS zone: $BASE_DOMAIN"
     
     # Create primary zone
     curl -s -X POST "http://$DNS_HOST:$DNS_PORT/api/zones/create" \
       -H "Content-Type: application/json" \
-      -d "{\"name\": \"$DOMAIN\", \"type\": \"Primary\"}" > /dev/null 2>&1
+      -d "{\"name\": \"$BASE_DOMAIN\", \"type\": \"Primary\"}" > /dev/null 2>&1
     
     # Add A record for @ (root domain)
     curl -s -X POST "http://$DNS_HOST:$DNS_PORT/api/zones/records/add" \
       -H "Content-Type: application/json" \
-      -d "{\"zone\": \"$DOMAIN\", \"domain\": \"$DOMAIN\", \"type\": \"A\", \"ipAddress\": \"$PI_IP\", \"ttl\": 3600}" > /dev/null 2>&1
+      -d "{\"zone\": \"$BASE_DOMAIN\", \"domain\": \"$BASE_DOMAIN\", \"type\": \"A\", \"ipAddress\": \"$PI_IP\", \"ttl\": 3600}" > /dev/null 2>&1
     
     # Add A records for subdomains
     for subdomain in vaultwarden uptime dns; do
         curl -s -X POST "http://$DNS_HOST:$DNS_PORT/api/zones/records/add" \
           -H "Content-Type: application/json" \
-          -d "{\"zone\": \"$DOMAIN\", \"domain\": \"${subdomain}.${DOMAIN}\", \"type\": \"A\", \"ipAddress\": \"$PI_IP\", \"ttl\": 3600}" > /dev/null 2>&1
+          -d "{\"zone\": \"$BASE_DOMAIN\", \"domain\": \"${subdomain}.${BASE_DOMAIN}\", \"type\": \"A\", \"ipAddress\": \"$PI_IP\", \"ttl\": 3600}" > /dev/null 2>&1
     done
     
     echo -e "${GREEN}  ✓ DNS zones configured${NC}"

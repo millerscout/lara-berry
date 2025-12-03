@@ -75,7 +75,7 @@ services:
   setup:
     build:
       context: .
-      dockerfile: Dockerfile.setup
+      dockerfile: scripts/Dockerfile.setup
     container_name: lara-berry-setup
     env_file:
       - .env
